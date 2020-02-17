@@ -1,0 +1,7 @@
+apiVersion: goalspike.com/v1alpha1
+kind: Bucket
+metadata:
+  name: example-bucket
+spec:
+  # Add fields here
+  size: 3
