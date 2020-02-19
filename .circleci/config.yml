@@ -1,0 +1,26 @@
+# Golang CircleCI 2.0 configuration file
+#
+# Check https://circleci.com/docs/2.0/language-go/ for more details
+version: 2
+jobs:
+  build:
+    docker:
+      - image: circleci/golang:1.13
+        working_directory: /go/src/github.com/{{ORG_NAME}}/{{REPO_NAME}}
+    steps:
+    - checkout
+    - run: go build -o build/_output/bin/bucket-operator github.com/leg100/bucket-operator/cmd/manager
+    - setup_remote_docker
+    - run:
+        name: Build image
+        command: |
+          if [ "${CIRCLE_BRANCH}" == "master" ]; then
+            docker build -f build/Dockerfile -t {{ORG_NAME}}/{{REPO_NAME}}:latest .
+          fi
+    - run:
+        name: Push image
+        command: |
+          if [ "${CIRCLE_BRANCH}" == "master" ]; then
+            docker login -u {{ORG_NAME}} -p "$DOCKER_PASSWORD"
+            docker push {{ORG_NAME}}/{{REPO_NAME}}:latest
+          fi
