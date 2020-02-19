@@ -33,3 +33,14 @@ EOF
  
 kubectl apply -f bucket.yaml
 ```
+
+Check the controller's logs:
+
+```bash
+~/co/bucket-operator(master) $ kubectl logs -f bucket-operator-7fb84b479c-cxql5
+...
+{"level":"info","ts":1582152903.7753346,"logger":"controller_bucket","msg":"Bucket not found, creating bucket","Request.Namespace":"default","Request.Name":"example-bucket","Bucket.Spec.Name":"automatize-test-bucket"}
+{"level":"info","ts":1582152905.1113892,"logger":"controller_bucket","msg":"Reconciling Bucket","Request.Namespace":"default","Request.Name":"example-bucket"}
+{"level":"info","ts":1582152905.4145389,"logger":"controller_bucket","msg":"Skip reconcile: Bucket already exists","Request.Namespace":"default","Request.Name":"example-bucket","Bucket.Spec.Name":"automatize-test-bucket"}
+```
+
