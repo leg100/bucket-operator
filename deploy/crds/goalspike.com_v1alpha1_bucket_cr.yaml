@@ -4,4 +4,5 @@ metadata:
   name: example-bucket
 spec:
   # Add fields here
-  size: 3
+  name: automatize-tfstate-2
+  project: automatize-admin
