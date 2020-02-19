@@ -31,3 +31,12 @@ spec:
                   fieldPath: metadata.name
             - name: OPERATOR_NAME
               value: "bucket-operator"
+            - name: GOOGLE_APPLICATION_CREDENTIALS
+              value: /credentials/key.json
+          volumeMounts:
+            - name: credentials
+              mountPath: /credentials
+      volumes:
+        - name: credentials
+          secret:
+            secretName: bucket-operator
