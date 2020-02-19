@@ -29,7 +29,7 @@ metadata:
 spec:
   name: <my-gcs-bucket-name>
   project: <my-gcp-project>
- EOF
+EOF
  
- kubectl apply -f bucket.yaml
- ```
+kubectl apply -f bucket.yaml
+```
