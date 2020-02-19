@@ -21,7 +21,7 @@ kubectl apply -f https://raw.githubusercontent.com/leg100/bucket-operator/master
 Create and deploy a `Bucket` custom resource:
 
 ```bash
-cat > bucket.yaml <-EOF
+cat > bucket.yaml <EOF
 apiVersion: goalspike.com/v1alpha1
 kind: Bucket
 metadata:
