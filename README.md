@@ -12,9 +12,19 @@ Deploy the `Bucket` CRD:
 kubectl apply -f https://raw.githubusercontent.com/leg100/bucket-operator/master/deploy/crds/goalspike.com_buckets_crd.yaml
 ```
 
-Deploy the controller:
+Create and deploy a secret, giving it the path to a GCP service account key (the service account needs to have the permission to create buckets):
 
 ```bash
+kubectl create secret generic bucket-operator \
+  --from-file=key.json=<path_to_key_file>
+```
+
+Deploy the controller including its service account and RBAC resources:
+
+```bash
+kubectl apply -f https://raw.githubusercontent.com/leg100/bucket-operator/master/deploy/service_account.yaml
+kubectl apply -f https://raw.githubusercontent.com/leg100/bucket-operator/master/deploy/role.yaml
+kubectl apply -f https://raw.githubusercontent.com/leg100/bucket-operator/master/deploy/role_binding.yaml
 kubectl apply -f https://raw.githubusercontent.com/leg100/bucket-operator/master/deploy/operator.yaml
 ```
 
