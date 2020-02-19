@@ -15,12 +15,12 @@ jobs:
         name: Build image
         command: |
           if [ "${CIRCLE_BRANCH}" == "master" ]; then
-            docker build -f build/Dockerfile -t {{ORG_NAME}}/{{REPO_NAME}}:latest .
+            docker build -f build/Dockerfile -t leg100/bucket-operator:latest .
           fi
     - run:
         name: Push image
         command: |
           if [ "${CIRCLE_BRANCH}" == "master" ]; then
-            docker login -u {{ORG_NAME}} -p "$DOCKER_PASSWORD"
-            docker push {{ORG_NAME}}/{{REPO_NAME}}:latest
+            docker login -u leg100 -p "$DOCKER_PASSWORD"
+            docker push leg100/bucket-operator:latest
           fi
