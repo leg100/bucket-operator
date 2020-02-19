@@ -18,6 +18,8 @@ Deploy the controller:
 kubectl apply -f https://raw.githubusercontent.com/leg100/bucket-operator/master/deploy/operator.yaml
 ```
 
+## use
+
 Create and deploy a `Bucket` custom resource:
 
 ```bash
