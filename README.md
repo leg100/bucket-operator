@@ -44,3 +44,7 @@ Check the controller's logs:
 {"level":"info","ts":1582152905.4145389,"logger":"controller_bucket","msg":"Skip reconcile: Bucket already exists","Request.Namespace":"default","Request.Name":"example-bucket","Bucket.Spec.Name":"automatize-test-bucket"}
 ```
 
+The logs confirm:
+
+* if the bucket doesn't exist, it creates one
+* it'll then notice it now exists
