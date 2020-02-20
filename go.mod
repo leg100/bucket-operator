@@ -3,7 +3,9 @@ module github.com/leg100/bucket-operator
 go 1.13
 
 require (
-	cloud.google.com/go v0.38.0
+	cloud.google.com/go v0.50.0
+	cloud.google.com/go/storage v1.5.0
+	github.com/fsouza/fake-gcs-server v1.17.1
 	github.com/leg100/memcached-operator v0.0.0-20200217171217-4572064e06ea // indirect
 	github.com/operator-framework/operator-sdk v0.14.1
 	github.com/spf13/pflag v1.0.5

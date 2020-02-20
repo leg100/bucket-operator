@@ -19,20 +19,23 @@ import (
 
 var log = logf.Log.WithName("controller_bucket")
 
-/**
-* USER ACTION REQUIRED: This is a scaffold file intended for the user to modify with their own Controller
-* business logic.  Delete these comments after modifying this file.*
- */
-
 // Add creates a new Bucket Controller and adds it to the Manager. The Manager will set fields on the Controller
 // and Start it when the Manager is Started.
 func Add(mgr manager.Manager) error {
-	return add(mgr, newReconciler(mgr))
+	reconciler, err := newReconciler(mgr)
+	if err != nil {
+		return err
+	}
+	return add(mgr, reconciler)
 }
 
 // newReconciler returns a new reconcile.Reconciler
-func newReconciler(mgr manager.Manager) reconcile.Reconciler {
-	return &ReconcileBucket{client: mgr.GetClient(), scheme: mgr.GetScheme()}
+func newReconciler(mgr manager.Manager) (reconcile.Reconciler, error) {
+	storageClient, err := storage.NewClient(context.TODO())
+	if err != nil {
+		return nil, err
+	}
+	return &ReconcileBucket{storageClient: storageClient, client: mgr.GetClient(), scheme: mgr.GetScheme()}, nil
 }
 
 // add adds a new Controller to mgr with r as the reconcile.Reconciler
@@ -69,8 +72,9 @@ var _ reconcile.Reconciler = &ReconcileBucket{}
 type ReconcileBucket struct {
 	// This client, initialized using mgr.Client() above, is a split client
 	// that reads objects from the cache and writes to the apiserver
-	client client.Client
-	scheme *runtime.Scheme
+	client        client.Client
+	storageClient *storage.Client
+	scheme        *runtime.Scheme
 }
 
 // Reconcile reads that state of the cluster for a Bucket object and makes changes based on the state read
@@ -98,15 +102,10 @@ func (r *ReconcileBucket) Reconcile(request reconcile.Request) (reconcile.Result
 		return reconcile.Result{}, err
 	}
 
-	client, err := storage.NewClient(context.TODO())
-	if err != nil {
-		return reconcile.Result{}, err
-	}
-
 	name := instance.Spec.Name
 	project := instance.Spec.Project
 
-	bh := client.Bucket(name)
+	bh := r.storageClient.Bucket(name)
 	_, err = bh.Attrs(context.TODO())
 	if err != nil {
 		if err == storage.ErrBucketNotExist {
