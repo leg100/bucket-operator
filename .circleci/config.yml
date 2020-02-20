@@ -9,6 +9,7 @@ jobs:
         working_directory: /go/src/github.com/{{ORG_NAME}}/{{REPO_NAME}}
     steps:
     - checkout
+    - run: go test -v github.com/leg100/bucket-operator/pkg/controller/bucket/
     - run: go build -o build/_output/bin/bucket-operator github.com/leg100/bucket-operator/cmd/manager
     - setup_remote_docker
     - run:
