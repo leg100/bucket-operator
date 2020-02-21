@@ -3,6 +3,5 @@ kind: Bucket
 metadata:
   name: example-bucket
 spec:
-  # Add fields here
-  name: automatize-tfstate-2
+  name: automatize-test-bucket
   project: automatize-admin
